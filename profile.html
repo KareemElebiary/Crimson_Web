@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My Profile - Crimson Web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="D:\Uni Web LAb\Web Project\images.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="profile.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="obj.js?v=2" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="profile.js" defer></script>
+</head>
+
+<body>
+    <div class="hyperspeed-background"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Crimson Web</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="user-avatar">U</div>
+                <div class="user-dropdown">
+                    <div class="user-dropdown-header">
+                        <p id="user-name">User Name</p>
+                        <span id="user-email">user@email.com</span>
+                    </div>
+                    <div class="user-dropdown-item" id="profile-btn">
+                        <span>👤</span> Profile
+                    </div>
+                    <div class="user-dropdown-item" id="settings-btn">
+                        <span>⚙️</span> Settings
+                    </div>
+                    <div class="user-dropdown-item logout" id="logout-btn">
+                        <span>🚪</span> Logout
+                    </div>
+                </div>
+            </div>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-container">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar-large" id="profile-avatar-large">
+                            <img id="profile-picture-display" src="" alt="Profile Picture" style="display: none;">
+                            <span id="profile-initials">U</span>
+                        </div>
+                        <button class="change-avatar-btn" id="change-avatar-btn">
+                            <span>📷</span> Change Photo
+                        </button>
+                        <input type="file" id="profile-picture-input" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="profile-name">Loading...</h1>
+                        <p id="profile-email">Loading...</p>
+                        <p class="profile-joined">Member since: <span id="profile-joined-date">-</span></p>
+                    </div>
+                </div>
+
+                <!-- Profile Tabs -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-tab="messages">My Messages</button>
+                </div>
+
+                <!-- Messages Tab -->
+                <div class="profile-tab-content active" id="messages-tab">
+                    <h2>My Previous Messages</h2>
+                    <div class="messages-container" id="messages-container">
+                        <div class="loading-spinner">Loading messages...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Crimson Web</h2>
+                    <p>Creating digital experiences that matter</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#portfolio">Portfolio</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/kareem.elebiary.5" class="social-icon">f</a>
+                        <a href="https://www.linkedin.com/in/kareem-elebiary/" class="social-icon">in</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Crimson Web. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Crop Modal -->
+    <div id="crop-modal" class="auth-modal">
+        <div class="crop-container-wrapper">
+            <button class="auth-close" id="close-crop-modal">&times;</button>
+            <div class="crop-header">
+                <h2>Crop Your Profile Picture</h2>
+                <p>Drag to reposition, use the slider to zoom</p>
+            </div>
+
+            <div class="crop-area">
+                <div class="crop-preview-container">
+                    <img id="crop-image" src="" alt="Image to crop">
+                    <div class="crop-overlay"></div>
+                    <div class="crop-box" id="crop-box">
+                        <div class="crop-handle nw"></div>
+                        <div class="crop-handle ne"></div>
+                        <div class="crop-handle sw"></div>
+                        <div class="crop-handle se"></div>
+                    </div>
+                </div>
+
+                <div class="crop-controls">
+                    <div class="zoom-control">
+                        <label>Zoom</label>
+                        <input type="range" id="zoom-slider" min="100" max="300" value="100" step="1">
+                        <span id="zoom-value">100%</span>
+                    </div>
+
+                    <div class="crop-preview-circle">
+                        <p>Preview</p>
+                        <div class="preview-avatar">
+                            <canvas id="preview-canvas" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="crop-actions">
+                <button class="profile-btn" id="cancel-crop-btn" style="background: #555;">Cancel</button>
+                <button class="profile-btn" id="apply-crop-btn">Apply & Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="auth-modal">
+
+        <div class="auth-container" style="max-width: 500px;">
+            <button class="auth-close" id="close-delete-modal">&times;</button>
+            <div class="auth-header">
+                <h2>⚠️ Delete Account</h2>
+                <p>This action cannot be undone. Are you absolutely sure?</p>
+            </div>
+            <form id="confirm-delete-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="delete-password">Enter your password to confirm</label>
+                    <input type="password" id="delete-password" name="password" placeholder="Your password" required>
+                </div>
+                <button type="submit" class="auth-submit" style="background: #dc143c;">Delete My Account</button>
+                <button type="button" class="auth-submit" id="cancel-delete-btn"
+                    style="background: #555; margin-top: 10px;">Cancel</button>
+                <div class="form-message" id="delete-message"></div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

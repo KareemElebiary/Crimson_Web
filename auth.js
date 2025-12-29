@@ -69,6 +69,8 @@ class AuthSystem {
         // User menu
         const userAvatar = document.querySelector('.user-avatar');
         const logoutBtn = document.getElementById('logout-btn');
+        const profileBtn = document.getElementById('profile-btn');
+        const settingsBtn = document.getElementById('settings-btn');
 
         if (userAvatar) {
             userAvatar.addEventListener('click', () => this.toggleUserMenu());
@@ -76,6 +78,18 @@ class AuthSystem {
 
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => this.handleLogout());
+        }
+
+        if (profileBtn) {
+            profileBtn.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+        }
+
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                window.location.href = 'settings.html';
+            });
         }
 
         // Close dropdown when clicking outside
@@ -286,8 +300,19 @@ class AuthSystem {
         if (userEmail) userEmail.textContent = user.email;
 
         if (userAvatar) {
-            const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
-            userAvatar.textContent = initials;
+            // Check if user has a profile picture
+            if (user.profile_picture) {
+                // Display profile picture
+                userAvatar.style.backgroundImage = `url(${user.profile_picture}?t=${new Date().getTime()})`;
+                userAvatar.style.backgroundSize = 'cover';
+                userAvatar.style.backgroundPosition = 'center';
+                userAvatar.textContent = '';
+            } else {
+                // Display initials if no profile picture
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                userAvatar.textContent = initials;
+                userAvatar.style.backgroundImage = '';
+            }
         }
     }
 

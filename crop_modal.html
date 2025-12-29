@@ -1,0 +1,43 @@
+<!-- Image Crop Modal -->
+<div id="crop-modal" class="auth-modal">
+    <div class="crop-container-wrapper">
+        <button class="auth-close" id="close-crop-modal">&times;</button>
+        <div class="crop-header">
+            <h2>Crop Your Profile Picture</h2>
+            <p>Drag to reposition, use the slider to zoom</p>
+        </div>
+
+        <div class="crop-area">
+            <div class="crop-preview-container">
+                <img id="crop-image" src="" alt="Image to crop">
+                <div class="crop-overlay"></div>
+                <div class="crop-box" id="crop-box">
+                    <div class="crop-handle nw"></div>
+                    <div class="crop-handle ne"></div>
+                    <div class="crop-handle sw"></div>
+                    <div class="crop-handle se"></div>
+                </div>
+            </div>
+
+            <div class="crop-controls">
+                <div class="zoom-control">
+                    <label>Zoom</label>
+                    <input type="range" id="zoom-slider" min="100" max="300" value="100" step="1">
+                    <span id="zoom-value">100%</span>
+                </div>
+
+                <div class="crop-preview-circle">
+                    <p>Preview</p>
+                    <div class="preview-avatar">
+                        <canvas id="preview-canvas" width="150" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="crop-actions">
+            <button class="profile-btn" id="cancel-crop-btn" style="background: #555;">Cancel</button>
+            <button class="profile-btn" id="apply-crop-btn">Apply & Upload</button>
+        </div>
+    </div>
+</div>
