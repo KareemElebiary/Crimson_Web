@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Crimson Web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="D:\Uni Web LAb\Web Project\images.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="obj.js?v=2" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="contact.js" defer></script>
+</head>
+
+<body>
+    <div class="hyperspeed-background"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Crimson Web</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="auth-buttons">
+                <button class="auth-btn signin" id="signin-btn">Sign In</button>
+                <button class="auth-btn signup" id="signup-btn">Sign Up</button>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-avatar">U</div>
+                <div class="user-dropdown">
+                    <div class="user-dropdown-header">
+                        <p id="user-name">User Name</p>
+                        <span id="user-email">user@email.com</span>
+                    </div>
+                    <div class="user-dropdown-item" id="profile-btn">
+                        <span>👤</span> Profile
+                    </div>
+                    <div class="user-dropdown-item" id="settings-btn">
+                        <span>⚙️</span> Settings
+                    </div>
+                    <div class="user-dropdown-item logout" id="logout-btn">
+                        <span>🚪</span> Logout
+                    </div>
+                </div>
+            </div>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Crimson Web</h1>
+            <h2 class="hero-subtitle">Creative web solutions for the modern era</h2>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Crimson Web is company specialized in Web Programming and UI/UX design,
+                        Our company is powered by Artifical Intelligence to provide easier and
+                        faster solutions for our clients also to brainstorm everything required
+                        in the web page from the customer
+                    </p>
+                    <p>
+                        At Crimson Web, we believe in the power of clean code, intuitive design, and user-focused
+                        solutions that drive results for our clients.
+                    </p>
+                    <ul class="about-features">
+                        <li>Modern Web Development</li>
+                        <li>Responsive Design</li>
+                        <li>Performance Optimization</li>
+                        <li>SEO Best Practices</li>
+                        <li>24/7 Support</li>
+                        <li>AI-Powered Solutions</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3 class="stat-number" data-target="3">0</h3>
+                        <p class="stat-label">Projects Completed</p>
+                    </div>
+                    <div class="stat">
+                        <h3 class="stat-number" data-target="2">0</h3>
+                        <p class="stat-label">Happy Clients</p>
+                    </div>
+                    <div class="stat">
+                        <h3 class="stat-number" data-target="1">0</h3>
+                        <p class="stat-label">Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Web Development</h3>
+                    <p>Custom web applications built with modern technologies and frameworks.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX Design</h3>
+                    <p>User-centered designs that enhance engagement and conversion.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>SEO Optimization</h3>
+                    <p>Improve your search engine rankings and online visibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title">Our Portfolio</h2>
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-image">
+                        <img src="CrimsonWeb.png" alt="Web Project">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>Crimson Web</h3>
+                        <p>Web programming Company</p>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <p>41-Elmaleya street - First settlement - New Cairo</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <p>01011336789</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <p>kareemelebiary@outlook.com</p>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name", id = "labels">Name</label>
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email", id = "labels">Email</label>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message", id = "labels">Message</label>
+                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <div id="form-message" class="form-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Crimson Web</h2>
+                    <p>Creating digital experiences that matter</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/kareem.elebiary.5" class="social-icon">f</a>
+                        <a href="https://www.linkedin.com/in/kareem-elebiary/" class="social-icon">in</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Crimson Web. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-container">
+            <button class="auth-close">&times;</button>
+
+            <div class="auth-header">
+                <h2>Welcome to Crimson Web</h2>
+                <p>Sign in to access exclusive features</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="signin">Sign In</button>
+                <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+
+            <form id="signin-form" class="auth-form active" action="auth_process.php" method="POST">
+                <input type="hidden" name="action" value="signin">
+
+                <div class="form-group">
+                    <label for="signin-email">Email Address</label>
+                    <input type="email" id="signin-email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group password-toggle">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" name="password" placeholder="Enter your password"
+                        required>
+                    <button type="button" class="toggle-password">👁️‍🗨️</button>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="auth-submit">Sign In</button>
+
+                <div class="auth-divider">or continue with</div>
+
+                <div class="social-auth">
+                    <button type="button" class="social-btn">
+                        <span>f</span> Facebook
+                    </button>
+                    <button type="button" class="social-btn">
+                        <span>G</span> Google
+                    </button>
+                </div>
+            </form>
+
+            <form id="signup-form" class="auth-form" action="auth_process.php" method="POST">
+                <input type="hidden" name="action" value="signup">
+
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group password-toggle">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password"
+                        placeholder="Create a password (min. 6 characters)" required>
+                    <button type="button" class="toggle-password">👁️‍🗨️</button>
+                </div>
+
+                <div class="form-group password-toggle">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" name="confirm_password"
+                        placeholder="Confirm your password" required>
+                    <button type="button" class="toggle-password">👁️‍🗨️</button>
+                </div>
+
+                <button type="submit" class="auth-submit">Create Account</button>
+
+                <div class="auth-divider">or continue with</div>
+
+                <div class="social-auth">
+                    <button type="button" class="social-btn">
+                        <span>f</span> Facebook
+                    </button>
+                    <button type="button" class="social-btn">
+                        <span>G</span> Google
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
