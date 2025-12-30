@@ -1,5 +1,3 @@
-// Profile Page JavaScript with Image Cropping
-
 let cropData = {
     selectedFile: null,
     imageElement: null,

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portfolio>
+    <project>
+        <id>1</id>
+        <title>Crimson Web</title>
+        <category>web</category>
+        <description>Web programming Company</description>
+        <image>CrimsonWeb.png</image>
+        <technologies>HTML, CSS, JavaScript, PHP, MySQL</technologies>
+        <url>index.html</url>
+        <featured>true</featured>
+    </project>
+    <project>
+        <id>2</id>
+        <title>Profile for a web</title>
+        <category>web</category>
+        <description>Modern online shopping experience</description>
+        <image>Profile.png</image>
+        <technologies>React, Node.js, MongoDB</technologies>
+        <url>#</url>
+        <featured>true</featured>
+    </project>
+    <project>
+        <id>3</id>
+        <title>Settings for a web</title>
+        <category>web</category>
+        <description>Creative portfolio showcase</description>
+        <image>Settings.png</image>
+        <technologies>HTML5, CSS3, JavaScript</technologies>
+        <url>#</url>
+        <featured>false</featured>
+    </project>
+</portfolio>

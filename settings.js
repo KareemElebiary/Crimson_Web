@@ -1,6 +1,6 @@
 // Settings Page JavaScript
 
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function () {
     // Check if user is logged in
     checkUserSession();
 
@@ -32,62 +32,60 @@ async function checkUserSession() {
 
 function loadUserData(user) {
     // Update navbar user info
-    document.getElementById('user-name').textContent = user.name;
-    document.getElementById('user-email').textContent = user.email;
+    $('#user-name').text(user.name);
+    $('#user-email').text(user.email);
 
     // Set initials or profile picture
-    const userAvatar = document.querySelector('.user-avatar');
-    if (userAvatar) {
+    const $userAvatar = $('.user-avatar');
+    if ($userAvatar.length) {
         if (user.profile_picture) {
-            userAvatar.style.backgroundImage = `url(${user.profile_picture}?t=${new Date().getTime()})`;
-            userAvatar.style.backgroundSize = 'cover';
-            userAvatar.style.backgroundPosition = 'center';
-            userAvatar.textContent = '';
+            $userAvatar.css({
+                'background-image': `url(${user.profile_picture}?t=${new Date().getTime()})`,
+                'background-size': 'cover',
+                'background-position': 'center'
+            }).text('');
         } else {
             const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
-            userAvatar.textContent = initials;
+            $userAvatar.css('background-image', '').text(initials);
         }
     }
 
     // Populate update form
-    document.getElementById('update-name').value = user.name;
-    document.getElementById('update-email').value = user.email;
+    $('#update-name').val(user.name);
+    $('#update-email').val(user.email);
 
     // Show user menu
-    document.querySelector('.user-menu').classList.add('active');
+    $('.user-menu').addClass('active');
 }
 
 function initSettingsNavigation() {
-    const navItems = document.querySelectorAll('.settings-nav-item');
-    const contentSections = document.querySelectorAll('.settings-content');
+    const $navItems = $('.settings-nav-item');
+    const $contentSections = $('.settings-content');
 
-    navItems.forEach(item => {
-        item.addEventListener('click', function () {
-            const targetSection = this.dataset.section;
+    $navItems.on('click', function () {
+        const targetSection = $(this).data('section');
 
-            // Remove active class from all nav items and sections
-            navItems.forEach(nav => nav.classList.remove('active'));
-            contentSections.forEach(section => section.classList.remove('active'));
+        // Remove active class from all nav items and sections
+        $navItems.removeClass('active');
+        $contentSections.removeClass('active');
 
-            // Add active class to clicked nav item and corresponding section
-            this.classList.add('active');
-            document.getElementById(`${targetSection}-section`).classList.add('active');
-        });
+        // Add active class to clicked nav item and corresponding section
+        $(this).addClass('active');
+        $(`#${targetSection}-section`).addClass('active');
     });
 }
 
 function initUpdateProfile() {
-    const form = document.getElementById('update-profile-form');
-    const messageDiv = document.getElementById('update-profile-message');
+    const $form = $('#update-profile-form');
+    const $messageDiv = $('#update-profile-message');
 
-    form.addEventListener('submit', async function (e) {
+    $form.on('submit', async function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
         formData.append('action', 'update_profile');
 
-        messageDiv.textContent = '';
-        messageDiv.className = 'form-message';
+        $messageDiv.text('').removeClass('success error form-message').addClass('form-message');
 
         try {
             const response = await fetch('profile_process.php', {
@@ -98,58 +96,56 @@ function initUpdateProfile() {
             const data = await response.json();
 
             if (data.success) {
-                messageDiv.textContent = data.message;
-                messageDiv.classList.add('success');
+                $messageDiv.text(data.message).addClass('success');
 
                 // Update displayed info in navbar
-                document.getElementById('user-name').textContent = formData.get('name');
-                document.getElementById('user-email').textContent = formData.get('email');
+                $('#user-name').text(formData.get('name'));
+                $('#user-email').text(formData.get('email'));
 
                 // Update avatar initials if no profile picture
-                const userAvatar = document.querySelector('.user-avatar');
-                if (userAvatar && !userAvatar.style.backgroundImage) {
+                const $userAvatar = $('.user-avatar');
+                if ($userAvatar.length && !$userAvatar.css('background-image') || $userAvatar.css('background-image') === 'none') {
                     const initials = formData.get('name').split(' ').map(n => n[0]).join('').toUpperCase();
-                    userAvatar.textContent = initials;
+                    $userAvatar.text(initials);
                 }
             } else {
-                messageDiv.textContent = data.message;
-                messageDiv.classList.add('error');
+                $messageDiv.text(data.message).addClass('error');
             }
         } catch (error) {
             console.error('Error updating profile:', error);
-            messageDiv.textContent = 'An error occurred. Please try again.';
-            messageDiv.classList.add('error');
+            $messageDiv.text('An error occurred. Please try again.').addClass('error');
         }
     });
 }
 
 function initResetPassword() {
-    const form = document.getElementById('reset-password-form');
-    const messageDiv = document.getElementById('reset-password-message');
+    const $form = $('#reset-password-form');
+    const $messageDiv = $('#reset-password-message');
 
-    form.addEventListener('submit', async function (e) {
+    $form.on('submit', async function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
+        const newPassword = formData.get('new_password');
+        const confirmPassword = formData.get('confirm_password');
 
         // Validate passwords match
-        if (formData.get('new_password') !== formData.get('confirm_password')) {
-            messageDiv.textContent = 'New passwords do not match!';
-            messageDiv.className = 'form-message error';
+        if (newPassword !== confirmPassword) {
+            $messageDiv.text('New passwords do not match!');
+            $messageDiv.removeClass('success error').addClass('form-message error');
             return;
         }
 
         // Validate password length
-        if (formData.get('new_password').length < 6) {
-            messageDiv.textContent = 'New password must be at least 6 characters long!';
-            messageDiv.className = 'form-message error';
+        if (newPassword.length < 6) {
+            $messageDiv.text('New password must be at least 6 characters long!');
+            $messageDiv.removeClass('success error').addClass('form-message error');
             return;
         }
 
         formData.append('action', 'reset_password');
 
-        messageDiv.textContent = '';
-        messageDiv.className = 'form-message';
+        $messageDiv.text('').removeClass('success error').addClass('form-message');
 
         try {
             const response = await fetch('profile_process.php', {
@@ -160,59 +156,54 @@ function initResetPassword() {
             const data = await response.json();
 
             if (data.success) {
-                messageDiv.textContent = data.message;
-                messageDiv.classList.add('success');
-                form.reset();
+                $messageDiv.text(data.message).addClass('success');
+                this.reset();
             } else {
-                messageDiv.textContent = data.message;
-                messageDiv.classList.add('error');
+                $messageDiv.text(data.message).addClass('error');
             }
         } catch (error) {
             console.error('Error resetting password:', error);
-            messageDiv.textContent = 'An error occurred. Please try again.';
-            messageDiv.classList.add('error');
+            $messageDiv.text('An error occurred. Please try again.').addClass('error');
         }
     });
 }
 
 function initDeleteAccount() {
-    const deleteBtn = document.getElementById('delete-account-btn');
-    const modal = document.getElementById('delete-modal');
-    const closeModal = document.getElementById('close-delete-modal');
-    const cancelBtn = document.getElementById('cancel-delete-btn');
-    const form = document.getElementById('confirm-delete-form');
-    const messageDiv = document.getElementById('delete-message');
+    const $deleteBtn = $('#delete-account-btn');
+    const $modal = $('#delete-modal');
+    const $closeModal = $('#close-delete-modal');
+    const $cancelBtn = $('#cancel-delete-btn');
+    const $form = $('#confirm-delete-form');
+    const $messageDiv = $('#delete-message');
 
-    deleteBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    $deleteBtn.on('click', () => {
+        $modal.addClass('active');
+        $('body').css('overflow', 'hidden');
     });
 
-    closeModal.addEventListener('click', closeDeleteModal);
-    cancelBtn.addEventListener('click', closeDeleteModal);
+    const closeDeleteModal = () => {
+        $modal.removeClass('active');
+        $('body').css('overflow', '');
+        $form[0].reset();
+        $messageDiv.text('').removeClass('success error').addClass('form-message');
+    };
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+    $closeModal.on('click', closeDeleteModal);
+    $cancelBtn.on('click', closeDeleteModal);
+
+    $modal.on('click', (e) => {
+        if ($(e.target).is($modal)) {
             closeDeleteModal();
         }
     });
 
-    function closeDeleteModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-        form.reset();
-        messageDiv.textContent = '';
-        messageDiv.className = 'form-message';
-    }
-
-    form.addEventListener('submit', async function (e) {
+    $form.on('submit', async function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
         formData.append('action', 'delete_account');
 
-        messageDiv.textContent = '';
-        messageDiv.className = 'form-message';
+        $messageDiv.text('').removeClass('success error').addClass('form-message');
 
         try {
             const response = await fetch('profile_process.php', {
@@ -223,20 +214,17 @@ function initDeleteAccount() {
             const data = await response.json();
 
             if (data.success) {
-                messageDiv.textContent = 'Account deleted. Redirecting...';
-                messageDiv.classList.add('success');
+                $messageDiv.text('Account deleted. Redirecting...').addClass('success');
 
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 2000);
             } else {
-                messageDiv.textContent = data.message;
-                messageDiv.classList.add('error');
+                $messageDiv.text(data.message).addClass('error');
             }
         } catch (error) {
             console.error('Error deleting account:', error);
-            messageDiv.textContent = 'An error occurred. Please try again.';
-            messageDiv.classList.add('error');
+            $messageDiv.text('An error occurred. Please try again.').addClass('error');
         }
     });
 }

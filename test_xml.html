@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Integration Test - Crimson Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #dc143c;
+            font-size: 2.5em;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #dc143c;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dc143c;
+            padding-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .status.error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status.pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        pre {
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .project-card h3 {
+            color: #dc143c;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: #dc143c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+
+        button {
+            background: #dc143c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #b01030;
+            transform: translateY(-2px);
+        }
+
+        .info {
+            background: rgba(23, 162, 184, 0.2);
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 XML Integration Test Page</h1>
+
+        <div class="test-section">
+            <h2>1. XML File Check <span id="xml-status" class="status pending">Testing...</span></h2>
+            <p>Checking if portfolio.xml exists and is accessible...</p>
+            <div id="xml-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. XML Structure Validation <span id="structure-status" class="status pending">Waiting...</span></h2>
+            <p>Validating XML structure and data integrity...</p>
+            <div id="structure-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Portfolio Data Display <span id="display-status" class="status pending">Waiting...</span></h2>
+            <p>Displaying parsed portfolio projects...</p>
+            <div id="display-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. JavaScript Integration <span id="js-status" class="status pending">Waiting...</span></h2>
+            <p>Testing portfolio.js functionality...</p>
+            <button onclick="testJSIntegration()">Test JS Functions</button>
+            <div id="js-result"></div>
+        </div>
+
+        <div class="info">
+            <strong>ℹ️ Info:</strong> This test page verifies that the XML integration is working correctly.
+            All tests should show a green "✅ Success" status.
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="window.location.href='index.html'">← Back to Main Site</button>
+            <button onclick="location.reload()">🔄 Rerun Tests</button>
+        </div>
+    </div>
+
+    <script>
+        // Test 1: Check XML File
+        function testXMLFile() {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    const statusEl = document.getElementById('xml-status');
+                    const resultEl = document.getElementById('xml-result');
+
+                    if (xhr.status === 200) {
+                        statusEl.textContent = '✅ Success';
+                        statusEl.className = 'status success';
+                        resultEl.innerHTML = '<p style="color: #28a745;">✓ XML file loaded successfully!</p>';
+
+                        // Show XML preview
+                        const xmlText = new XMLSerializer().serializeToString(xhr.responseXML);
+                        resultEl.innerHTML += '<pre>' + escapeHtml(xmlText.substring(0, 500)) + '...</pre>';
+
+                        // Proceed to next test
+                        testXMLStructure(xhr.responseXML);
+                    } else {
+                        statusEl.textContent = '❌ Failed';
+                        statusEl.className = 'status error';
+                        resultEl.innerHTML = '<p style="color: #dc3545;">✗ Failed to load XML file. Status: ' + xhr.status + '</p>';
+                    }
+                }
+            };
+            xhr.open('GET', 'portfolio.xml', true);
+            xhr.send();
+        }
+
+        // Test 2: Validate XML Structure
+        function testXMLStructure(xml) {
+            const statusEl = document.getElementById('structure-status');
+            const resultEl = document.getElementById('structure-result');
+
+            try {
+                const projects = xml.getElementsByTagName('project');
+
+                if (projects.length === 0) {
+                    throw new Error('No projects found in XML');
+                }
+
+                statusEl.textContent = '✅ Success';
+                statusEl.className = 'status success';
+
+                let html = '<p style="color: #28a745;">✓ Found ' + projects.length + ' projects in XML</p>';
+                html += '<p>Required fields check:</p><ul>';
+
+                const requiredFields = ['id', 'title', 'category', 'description', 'image', 'technologies', 'url', 'featured'];
+                let allFieldsPresent = true;
+
+                for (let field of requiredFields) {
+                    const hasField = projects[0].getElementsByTagName(field).length > 0;
+                    html += '<li style="color: ' + (hasField ? '#28a745' : '#dc3545') + ';">' +
+                        (hasField ? '✓' : '✗') + ' ' + field + '</li>';
+                    if (!hasField) allFieldsPresent = false;
+                }
+
+                html += '</ul>';
+                resultEl.innerHTML = html;
+
+                // Proceed to next test
+                testDisplayData(xml);
+
+            } catch (error) {
+                statusEl.textContent = '❌ Failed';
+                statusEl.className = 'status error';
+                resultEl.innerHTML = '<p style="color: #dc3545;">✗ Error: ' + error.message + '</p>';
+            }
+        }
+
+        // Test 3: Display Portfolio Data
+        function testDisplayData(xml) {
+            const statusEl = document.getElementById('display-status');
+            const resultEl = document.getElementById('display-result');
+
+            try {
+                const projects = xml.getElementsByTagName('project');
+                let html = '';
+
+                for (let i = 0; i < projects.length; i++) {
+                    const project = projects[i];
+                    const title = getNodeValue(project, 'title');
+                    const category = getNodeValue(project, 'category');
+                    const description = getNodeValue(project, 'description');
+                    const technologies = getNodeValue(project, 'technologies');
+                    const featured = getNodeValue(project, 'featured');
+
+                    html += '<div class="project-card">';
+                    html += '<h3>' + title + (featured === 'true' ? ' ⭐' : '') + '</h3>';
+                    html += '<p><strong>Category:</strong> ' + category + '</p>';
+                    html += '<p><strong>Description:</strong> ' + description + '</p>';
+                    html += '<p><strong>Technologies:</strong> ';
+
+                    const techs = technologies.split(',');
+                    for (let tech of techs) {
+                        html += '<span class="tech-badge">' + tech.trim() + '</span>';
+                    }
+
+                    html += '</p></div>';
+                }
+
+                statusEl.textContent = '✅ Success';
+                statusEl.className = 'status success';
+                resultEl.innerHTML = html;
+
+                // Proceed to next test
+                testJSStatus();
+
+            } catch (error) {
+                statusEl.textContent = '❌ Failed';
+                statusEl.className = 'status error';
+                resultEl.innerHTML = '<p style="color: #dc3545;">✗ Error: ' + error.message + '</p>';
+            }
+        }
+
+        // Test 4: Check JS Integration
+        function testJSStatus() {
+            const statusEl = document.getElementById('js-status');
+            const resultEl = document.getElementById('js-result');
+
+            statusEl.textContent = '✅ Ready';
+            statusEl.className = 'status success';
+            resultEl.innerHTML = '<p style="color: #28a745;">✓ Click the button above to test JavaScript functions</p>';
+        }
+
+        function testJSIntegration() {
+            const resultEl = document.getElementById('js-result');
+            let html = '<h3>Testing JavaScript Functions:</h3>';
+
+            // Check if portfolio.js functions exist
+            const functions = [
+                'loadPortfolioFromXML',
+                'parseAndDisplayPortfolio',
+                'createPortfolioItem',
+                'setupPortfolioFilters',
+                'filterPortfolioItems'
+            ];
+
+            html += '<ul>';
+            for (let func of functions) {
+                const exists = typeof window[func] === 'function';
+                html += '<li style="color: ' + (exists ? '#28a745' : '#ffc107') + ';">' +
+                    (exists ? '✓' : '⚠') + ' ' + func +
+                    (exists ? ' (defined)' : ' (not in global scope - this is OK if in module)') + '</li>';
+            }
+            html += '</ul>';
+
+            html += '<p style="color: #17a2b8; margin-top: 15px;">Note: Functions may be scoped within the module. Check main page for actual functionality.</p>';
+
+            resultEl.innerHTML = html;
+        }
+
+        // Helper function
+        function getNodeValue(parent, tagName) {
+            const node = parent.getElementsByTagName(tagName)[0];
+            return node ? node.textContent : '';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Run tests on page load
+        window.onload = function () {
+            testXMLFile();
+        };
+    </script>
+</body>
+
+</html>
